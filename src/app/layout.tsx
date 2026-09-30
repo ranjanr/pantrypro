@@ -3,8 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "PantryPro: Intent-Driven Culinary Curation Engine",
-  description: "Modern, lightning-fast mobile-first recipe curation powered by MongoDB Atlas Vector Search and Google Gemini AI.",
-  keywords: ["recipe engine", "vector search", "mongodb atlas", "google gemini", "quick meals", "culinary ai"],
+  description: "Modern, lightning-fast mobile-first recipe curation engine for busy professionals and home chefs.",
+  keywords: ["recipe engine", "pantry chef", "quick meals", "culinary curation", "gourmet recipes", "leftover recipes"],
 };
 
 export const viewport: Viewport = {

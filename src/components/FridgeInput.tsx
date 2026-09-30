@@ -227,7 +227,7 @@ export function FridgeInput({ onSearch, isSearching, onOpenSynthesizer }: Fridge
               <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <span className="hidden sm:inline">Vector Match</span>
+                <span className="hidden sm:inline">Match Recipes</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

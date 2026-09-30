@@ -8,6 +8,7 @@ import { RecipeCard } from "@/components/RecipeCard";
 import { RecipeDetailModal } from "@/components/RecipeDetailModal";
 import { CookingFocusMode } from "@/components/CookingFocusMode";
 import { SynthesizeModal } from "@/components/SynthesizeModal";
+import { Footer } from "@/components/Footer";
 import { Recipe } from "@/lib/types";
 import { Bookmark, ArrowLeft, Plus, Sparkles, ChefHat, Flame, Clock } from "lucide-react";
 
@@ -95,7 +96,7 @@ export default function VaultPage() {
               </h1>
             </div>
             <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400">
-              Your preserved curated collection & custom synthesized recipes in MongoDB Atlas.
+              Your preserved curated collection & custom synthesized recipes.
             </p>
           </div>
 
@@ -185,6 +186,8 @@ export default function VaultPage() {
           )}
         </section>
       </main>
+
+      <Footer />
 
       <BottomNav
         onOpenSynthesizer={() => setSynthesizerOpen(true)}

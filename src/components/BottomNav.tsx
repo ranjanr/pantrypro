@@ -2,23 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Compass, Sparkles, Bookmark, Database } from "lucide-react";
+import { Compass, Sparkles, Bookmark } from "lucide-react";
 
 interface BottomNavProps {
   onOpenSynthesizer?: () => void;
-  onOpenGuide?: () => void;
   vaultCount?: number;
 }
 
 export function BottomNav({
   onOpenSynthesizer,
-  onOpenGuide,
   vaultCount = 0,
 }: BottomNavProps) {
   const pathname = usePathname();
 
   return (
-    <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#121319]/90 backdrop-blur-xl border-t border-stone-200 dark:border-stone-800 px-4 py-2 flex items-center justify-around">
+    <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#121319]/90 backdrop-blur-xl border-t border-stone-200 dark:border-stone-800 px-6 py-2 flex items-center justify-around shadow-lg">
       <Link
         href="/"
         className={`flex flex-col items-center gap-1 py-1 px-3 rounded-2xl transition ${
@@ -31,12 +29,12 @@ export function BottomNav({
 
       <button
         onClick={onOpenSynthesizer}
-        className="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-stone-500 dark:text-stone-400 hover:text-brand-500 transition"
+        className="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-stone-500 dark:text-stone-400 hover:text-brand-500 transition cursor-pointer"
       >
-        <div className="p-1 rounded-xl bg-gradient-to-tr from-brand-500 to-amber-500 text-white shadow-md shadow-brand-500/20">
+        <div className="p-1.5 rounded-xl bg-gradient-to-tr from-brand-500 to-amber-500 text-white shadow-md shadow-brand-500/20">
           <Sparkles className="w-4 h-4" />
         </div>
-        <span className="text-[10px] font-medium text-brand-500">AI Synthesize</span>
+        <span className="text-[10px] font-medium text-brand-500">Synthesize</span>
       </button>
 
       <Link
@@ -53,18 +51,8 @@ export function BottomNav({
             </span>
           )}
         </div>
-        <span className="text-[10px]">Vault</span>
+        <span className="text-[10px]">My Vault</span>
       </Link>
-
-      {onOpenGuide && (
-        <button
-          onClick={onOpenGuide}
-          className="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-stone-500 dark:text-stone-400 hover:text-emerald-500 transition"
-        >
-          <Database className="w-5 h-5 text-emerald-500" />
-          <span className="text-[10px]">Atlas</span>
-        </button>
-      )}
     </nav>
   );
 }

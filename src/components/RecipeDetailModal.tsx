@@ -198,7 +198,7 @@ export function RecipeDetailModal({
                         The Chef&apos;s Touch: Dynamic Persona Rewriting
                       </h4>
                       <p className="text-xs text-stone-500 dark:text-stone-400">
-                        Select a persona to dynamically elevate heat control, acid balance, and techniques via Gemini
+                        Select a persona to dynamically elevate heat control, acid balance, and techniques
                       </p>
                     </div>
                   </div>

@@ -272,7 +272,7 @@ export function SynthesizeModal({
         {/* Bottom CTA */}
         <div className="pt-4 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between">
           <span className="text-xs text-stone-400 font-mono">
-            Directly saved to Atlas Vault
+            Directly saved to your Vault
           </span>
           <button
             onClick={handleSynthesize}
@@ -282,7 +282,7 @@ export function SynthesizeModal({
             {isSynthesizing ? (
               <>
                 <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>Crafting Recipe with Gemini...</span>
+                <span>Crafting Gourmet Recipe...</span>
               </>
             ) : (
               <>

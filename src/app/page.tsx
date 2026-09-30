@@ -8,16 +8,14 @@ import { RecipeCard } from "@/components/RecipeCard";
 import { RecipeDetailModal } from "@/components/RecipeDetailModal";
 import { CookingFocusMode } from "@/components/CookingFocusMode";
 import { SynthesizeModal } from "@/components/SynthesizeModal";
-import { AtlasSetupGuideModal } from "@/components/AtlasSetupGuideModal";
+import { Footer } from "@/components/Footer";
 import { Recipe } from "@/lib/types";
-import { Sparkles, Flame, Zap, Database, ArrowUpRight, ChefHat, CheckCircle2 } from "lucide-react";
+import { Sparkles, Flame, ArrowUpRight, ChefHat } from "lucide-react";
 
 export default function HomePage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
-  const [isVectorSearch, setIsVectorSearch] = useState(false);
-  const [fallbackMode, setFallbackMode] = useState(false);
   const [vaultCount, setVaultCount] = useState(0);
   const [currentQuery, setCurrentQuery] = useState("");
 
@@ -25,7 +23,6 @@ export default function HomePage() {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [focusRecipe, setFocusRecipe] = useState<Recipe | null>(null);
   const [synthesizerOpen, setSynthesizerOpen] = useState(false);
-  const [guideOpen, setGuideOpen] = useState(false);
 
   // Fetch initial recipes
   const loadRecipes = useCallback(
@@ -43,8 +40,6 @@ export default function HomePage() {
         const data = await res.json();
         if (data.success) {
           setRecipes(data.data || []);
-          setIsVectorSearch(Boolean(data.isVectorSearch));
-          setFallbackMode(Boolean(data.fallbackMode));
         }
       } catch (err) {
         console.error("Failed to load recipes:", err);
@@ -99,20 +94,20 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-[#0d0e12] text-stone-900 dark:text-stone-100 flex flex-col pb-20 sm:pb-12 transition-colors">
+    <div className="min-h-screen bg-stone-50 dark:bg-[#0d0e12] text-stone-900 dark:text-stone-100 flex flex-col transition-colors">
       {/* Top Navigation */}
       <Navbar
         onOpenSynthesizer={() => setSynthesizerOpen(true)}
         vaultCount={vaultCount}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 space-y-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-20 sm:pb-12 space-y-8">
         
         {/* Hero Banner */}
         <section className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-semibold border border-brand-500/20 animate-fade-in">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>MongoDB Atlas Vector Search & Gemini 2.5 Pro</span>
+            <span>Rapid 15-Minute Gourmet Curation</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black font-display tracking-tight text-stone-900 dark:text-white leading-[1.1]">
@@ -120,7 +115,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-sm sm:text-base text-stone-600 dark:text-stone-400 max-w-2xl mx-auto leading-relaxed">
-            High-yield, fast recipes tailored for busy professionals & students. Semantic vector matching, dynamic heat/acidity rewriting, and hands-free cooking mode.
+            High-yield, fast recipes tailored for busy professionals & students. Semantic recipe matching, dynamic chef techniques, and hands-free cooking mode.
           </p>
         </section>
 
@@ -139,24 +134,18 @@ export default function HomePage() {
             <span className="font-semibold text-stone-800 dark:text-stone-200">
               {recipes.length} Curated Dishes
             </span>
-            {isVectorSearch && (
-              <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md font-mono text-[11px] font-semibold border border-emerald-500/20">
-                <Database className="w-3 h-3" />
-                Vector Cosine Ranked
-              </span>
-            )}
             {currentQuery && (
-              <span className="text-[11px] text-brand-600 dark:text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded-md font-medium">
-                Query: &ldquo;{currentQuery}&rdquo;
+              <span className="text-[11px] text-brand-600 dark:text-brand-400 bg-brand-500/10 px-2.5 py-0.5 rounded-md font-medium">
+                Matching: &ldquo;{currentQuery}&rdquo;
               </span>
             )}
           </div>
 
           <button
             onClick={() => setSynthesizerOpen(true)}
-            className="flex items-center gap-1 font-semibold text-brand-500 hover:text-brand-600 transition"
+            className="flex items-center gap-1 font-semibold text-brand-500 hover:text-brand-600 transition cursor-pointer"
           >
-            <span>Custom Pantry Synthesis</span>
+            <span>Synthesize Custom Recipe</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
         </section>
@@ -177,15 +166,15 @@ export default function HomePage() {
               <ChefHat className="w-12 h-12 mx-auto text-brand-500 opacity-60" />
               <div className="space-y-1">
                 <h3 className="font-bold text-lg text-stone-900 dark:text-white">
-                  No direct vector matches found
+                  No exact matches found
                 </h3>
                 <p className="text-xs text-stone-500 dark:text-stone-400">
-                  Synthesize an entirely new recipe using your exact leftover ingredients with Gemini AI!
+                  Synthesize an entirely new recipe using your exact leftover ingredients with our Chef Studio!
                 </p>
               </div>
               <button
                 onClick={() => setSynthesizerOpen(true)}
-                className="px-6 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold shadow-md shadow-brand-500/25 transition"
+                className="px-6 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold shadow-md shadow-brand-500/25 transition cursor-pointer"
               >
                 Synthesize from Fridge
               </button>
@@ -206,10 +195,12 @@ export default function HomePage() {
         </section>
       </main>
 
+      {/* Footer */}
+      <Footer />
+
       {/* Mobile Bottom Sheet Navigation */}
       <BottomNav
         onOpenSynthesizer={() => setSynthesizerOpen(true)}
-        onOpenGuide={() => setGuideOpen(true)}
         vaultCount={vaultCount}
       />
 
@@ -245,13 +236,6 @@ export default function HomePage() {
                 .filter((s) => s.length > 1)
             : undefined
         }
-      />
-
-      {/* Atlas Vector Setup Guide */}
-      <AtlasSetupGuideModal
-        isOpen={guideOpen}
-        onClose={() => setGuideOpen(false)}
-        isMongoConnected={!fallbackMode}
       />
     </div>
   );
