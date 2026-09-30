@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "build:worker": "opennextjs-cloudflare build",
+    "build": "next build && opennextjs-cloudflare build --skipNextBuild",
+    "build:worker": "next build && opennextjs-cloudflare build --skipNextBuild",
     "start": "next start",
     "lint": "next lint",
     "seed": "node scripts/seed-db.mjs",
-    "deploy": "opennextjs-cloudflare build && wrangler deploy"
+    "deploy": "next build && opennextjs-cloudflare build --skipNextBuild && wrangler deploy"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
