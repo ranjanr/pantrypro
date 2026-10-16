@@ -92,9 +92,42 @@ export function RecipeDetailModal({
     }
   };
 
-  const instructionsToDisplay = rewrittenData
+  const rawRewrittenSteps = Array.isArray(rewrittenData?.revisedInstructions)
     ? rewrittenData.revisedInstructions
-    : recipe.instructions;
+        .map((step: any, idx: number) => {
+          if (typeof step === "string") {
+            return {
+              stepNumber: idx + 1,
+              instruction: step.replace(/^\s*(?:step\s*)?\d+[\.\)\:\-]?\s*/i, "").trim(),
+              chefTip: recipe.instructions?.[idx]?.chefTip,
+              durationMinutes: recipe.instructions?.[idx]?.durationMinutes || 2,
+            };
+          }
+          if (step && typeof step === "object") {
+            const text =
+              step.instruction ||
+              step.text ||
+              step.description ||
+              step.action ||
+              step.step ||
+              "";
+            return {
+              stepNumber: Number(step.stepNumber) || idx + 1,
+              instruction: typeof text === "string" ? text.trim() : "",
+              chefTip: step.chefTip || step.tip || recipe.instructions?.[idx]?.chefTip,
+              durationMinutes:
+                Number(step.durationMinutes || step.duration) ||
+                recipe.instructions?.[idx]?.durationMinutes ||
+                2,
+            };
+          }
+          return null;
+        })
+        .filter((s): s is NonNullable<typeof s> => Boolean(s && s.instruction && s.instruction.length > 0))
+    : [];
+
+  const instructionsToDisplay =
+    rawRewrittenSteps.length > 0 ? rawRewrittenSteps : recipe.instructions || [];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in">
@@ -409,14 +442,10 @@ export function RecipeDetailModal({
             <button
               onClick={() => {
                 onClose();
-                onCookNow(
-                  rewrittenData
-                    ? {
-                        ...recipe,
-                        instructions: rewrittenData.revisedInstructions,
-                      }
-                    : recipe
-                );
+                onCookNow({
+                  ...recipe,
+                  instructions: instructionsToDisplay,
+                });
               }}
               className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-brand-500 to-amber-500 hover:brightness-110 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-brand-500/25 transition active:scale-95"
             >

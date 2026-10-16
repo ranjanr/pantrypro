@@ -48,6 +48,89 @@ export function generateSimulatedEmbedding(text: string): number[] {
   return vector.map((v) => v / magnitude);
 }
 
+// Normalize any AI-returned rewrite payload so culinary steps are never blank or malformed
+function normalizeRewriteResponse(
+  raw: any,
+  recipe: Recipe,
+  personaType: ChefPersonaType
+): RewrittenRecipeResponse {
+  const simulated = getSimulatedPersonaRewrite(recipe, personaType);
+  if (!raw || typeof raw !== "object") {
+    return simulated;
+  }
+
+  const rawSteps = Array.isArray(raw.revisedInstructions)
+    ? raw.revisedInstructions
+    : Array.isArray(raw.instructions)
+    ? raw.instructions
+    : Array.isArray(raw.steps)
+    ? raw.steps
+    : [];
+
+  const normalizedSteps = rawSteps
+    .map((step: any, idx: number) => {
+      if (typeof step === "string") {
+        const cleaned = step.replace(/^\s*(?:step\s*)?\d+[\.\)\:\-]?\s*/i, "").trim();
+        return {
+          stepNumber: idx + 1,
+          instruction: cleaned,
+          chefTip: simulated.revisedInstructions[idx]?.chefTip || simulated.proSecrets.heatControl,
+          durationMinutes: recipe.instructions[idx]?.durationMinutes || 2,
+        };
+      }
+      if (step && typeof step === "object") {
+        const text =
+          step.instruction ||
+          step.text ||
+          step.description ||
+          step.action ||
+          step.step ||
+          step.content ||
+          "";
+        return {
+          stepNumber: Number(step.stepNumber) || idx + 1,
+          instruction: typeof text === "string" ? text.trim() : "",
+          chefTip:
+            step.chefTip ||
+            step.tip ||
+            step.proTip ||
+            simulated.revisedInstructions[idx]?.chefTip,
+          durationMinutes:
+            Number(step.durationMinutes || step.duration) ||
+            recipe.instructions[idx]?.durationMinutes ||
+            2,
+        };
+      }
+      return null;
+    })
+    .filter((s: any) => s && s.instruction && s.instruction.length > 0);
+
+  const finalInstructions =
+    normalizedSteps.length > 0 ? normalizedSteps : simulated.revisedInstructions;
+
+  const rawSecrets = raw.proSecrets || {};
+  const rawSwaps = Array.isArray(raw.suggestedPantrySwaps)
+    ? raw.suggestedPantrySwaps.filter((sw: any) => sw && sw.original && sw.swap)
+    : [];
+
+  return {
+    originalTitle: raw.originalTitle || recipe.title,
+    persona: personaType,
+    enhancedTagline: raw.enhancedTagline || simulated.enhancedTagline,
+    revisedInstructions: finalInstructions,
+    proSecrets: {
+      heatControl: rawSecrets.heatControl || simulated.proSecrets.heatControl,
+      acidityAndBrighteners:
+        rawSecrets.acidityAndBrighteners || simulated.proSecrets.acidityAndBrighteners,
+      texturalContrast: rawSecrets.texturalContrast || simulated.proSecrets.texturalContrast,
+      restingAndFinishing:
+        rawSecrets.restingAndFinishing || simulated.proSecrets.restingAndFinishing,
+    },
+    suggestedPantrySwaps:
+      rawSwaps.length > 0 ? rawSwaps : simulated.suggestedPantrySwaps,
+  };
+}
+
 // Dynamic Pro Chef Rewriter using Gemini
 export async function rewriteRecipeWithPersona(
   recipe: Recipe,
@@ -59,16 +142,7 @@ export async function rewriteRecipeWithPersona(
     return getSimulatedPersonaRewrite(recipe, personaType);
   }
 
-  try {
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-pro",
-      generationConfig: {
-        responseMimeType: "application/json",
-        temperature: 0.7,
-      },
-    });
-
-    const prompt = `You are ${persona.name} (${persona.subtitle}). Focus: ${persona.focus}.
+  const prompt = `You are ${persona.name} (${persona.subtitle}). Focus: ${persona.focus}.
 Transform and dynamically elevate the following recipe instructions using your signature pro-chef technique.
 
 Original Recipe:
@@ -79,14 +153,10 @@ Ingredients: ${JSON.stringify(recipe.ingredients)}
 Current Instructions: ${JSON.stringify(recipe.instructions)}
 
 Requirements:
-1. Revise each step to include specific pro-level techniques (e.g. pan temperature indicators, Maillard reaction queues, blooming spices, emulsification techniques, resting durations, and acidity adjustments with lime/vinegar).
-2. Maintain the same general step count and core ingredients, but elevate the culinary execution and speed.
-3. Provide targeted secrets for:
-   - Heat Control (flame intensity, pan surface cues)
-   - Acidity & Brighteners (when to introduce lemon/lime/vinegar/sumac to slice through fat)
-   - Textural Contrast (crispy bits, emulsions, herb additions)
-   - Resting & Finishing (oil drizzles, salt flakes, temperature stabilization)
-4. Return valid JSON matching this schema:
+1. Revise each step in "revisedInstructions" to include specific pro-level techniques (pan temperature indicators, Maillard reaction cues, blooming spices, emulsification techniques, resting durations, and acidity adjustments with lime/vinegar).
+2. Every item in "revisedInstructions" MUST be an object with "stepNumber" (number), "instruction" (non-empty string), "chefTip" (string), and "durationMinutes" (number).
+3. Maintain the same general step count and core ingredients, but elevate the culinary execution and speed.
+4. Return valid JSON matching this exact schema:
 {
   "originalTitle": "${recipe.title}",
   "persona": "${personaType}",
@@ -110,22 +180,22 @@ Requirements:
   ]
 }`;
 
+  try {
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      generationConfig: {
+        responseMimeType: "application/json",
+        temperature: 0.7,
+      },
+    });
+
     const result = await model.generateContent(prompt);
     const text = result.response.text();
-    return JSON.parse(text) as RewrittenRecipeResponse;
+    const parsed = JSON.parse(text);
+    return normalizeRewriteResponse(parsed, recipe, personaType);
   } catch (error) {
     console.warn("Gemini rewrite fallback triggered:", error);
-    // Fallback model trial or simulated
-    try {
-      const flashModel = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash",
-        generationConfig: { responseMimeType: "application/json" },
-      });
-      const res = await flashModel.generateContent(`Revise recipe "${recipe.title}" as Chef ${persona.name}. Return JSON with originalTitle, persona, enhancedTagline, revisedInstructions, proSecrets, suggestedPantrySwaps.`);
-      return JSON.parse(res.response.text());
-    } catch {
-      return getSimulatedPersonaRewrite(recipe, personaType);
-    }
+    return getSimulatedPersonaRewrite(recipe, personaType);
   }
 }
 
@@ -260,7 +330,7 @@ export async function synthesizeRecipeFromPantry(params: {
 
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-pro",
+      model: "gemini-2.5-flash",
       generationConfig: {
         responseMimeType: "application/json",
         temperature: 0.8,
@@ -276,7 +346,8 @@ Preferred Cuisine style: ${cuisine}
 
 Requirements:
 1. Make it ultra-practical, rapid (< ${maxTime} mins total), and culinary-grade (with pro chef tips on heat control, acidity balance, and resting).
-2. Format as a valid JSON Recipe object with these exact fields:
+2. Every item in "instructions" MUST be an object with "stepNumber" (number), "instruction" (non-empty string), "chefTip" (string), and "durationMinutes" (number).
+3. Format as a valid JSON Recipe object with these exact fields:
 {
   "title": "Creative Appetizing Title",
   "tagline": "Short punchy description highlighting flavor and speed",
@@ -287,7 +358,7 @@ Requirements:
   "difficulty": "Ultra-Fast (10m)" | "Quick (20m)" | "Balanced (30m)",
   "servings": number,
   "cuisine": "${cuisine}",
-  "flavorProfiles": ["Spicy", "Umami-rich", etc],
+  "flavorProfiles": ["Spicy", "Umami-rich"],
   "dietaryFlags": ["Vegetarian", "Vegan", "Eggless", "Gluten-Free", "High-Protein"],
   "ingredients": [
     { "item": "name", "amount": "quantity", "notes": "optional note" }
@@ -316,9 +387,45 @@ Requirements:
 }`;
 
     const result = await model.generateContent(prompt);
-    const parsed = JSON.parse(result.response.text()) as Recipe;
+    const parsed = JSON.parse(result.response.text());
+    const fallback = generateFallbackSynthesizedRecipe(params);
+
+    const rawSteps = Array.isArray(parsed.instructions) ? parsed.instructions : [];
+    const normalizedInstructions = rawSteps
+      .map((step: any, idx: number) => {
+        if (typeof step === "string") {
+          return {
+            stepNumber: idx + 1,
+            instruction: step.replace(/^\s*(?:step\s*)?\d+[\.\)\:\-]?\s*/i, "").trim(),
+            chefTip: fallback.instructions[idx]?.chefTip || fallback.proChefTips.heatControl,
+            durationMinutes: 3,
+          };
+        }
+        if (step && typeof step === "object") {
+          const text = step.instruction || step.text || step.description || step.action || step.step || "";
+          return {
+            stepNumber: Number(step.stepNumber) || idx + 1,
+            instruction: typeof text === "string" ? text.trim() : "",
+            chefTip: step.chefTip || step.tip || fallback.instructions[idx]?.chefTip,
+            durationMinutes: Number(step.durationMinutes || step.duration) || 3,
+          };
+        }
+        return null;
+      })
+      .filter((s: any) => s && s.instruction && s.instruction.length > 0);
+
     return {
+      ...fallback,
       ...parsed,
+      instructions: normalizedInstructions.length > 0 ? normalizedInstructions : fallback.instructions,
+      ingredients:
+        Array.isArray(parsed.ingredients) && parsed.ingredients.length > 0
+          ? parsed.ingredients
+          : fallback.ingredients,
+      image:
+        typeof parsed.image === "string" && parsed.image.startsWith("http")
+          ? parsed.image.replace(/w=\d+/g, "w=480").replace(/q=\d+/g, "q=60")
+          : fallback.image,
       _id: `rec_ai_${Date.now()}`,
       isCustom: true,
       createdAt: new Date().toISOString(),
