@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { synthesizeRecipeFromPantry, generateTextEmbedding } from "@/lib/gemini";
-import { getRecipesCollection, memoryDb } from "@/lib/mongodb";
+import { getRecipesCollection, getVaultCollection, memoryDb } from "@/lib/mongodb";
 import { Recipe } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
@@ -26,18 +26,27 @@ export async function POST(request: NextRequest) {
     const textToEmbed = `${synthesizedRecipe.title}. ${synthesizedRecipe.tagline}. ${synthesizedRecipe.description}. Ingredients: ${synthesizedRecipe.ingredients.map(i => i.item).join(", ")}`;
     synthesizedRecipe.embedding = await generateTextEmbedding(textToEmbed);
 
-    // Save directly to MongoDB / Memory Vault
+    // Save directly to MongoDB Atlas (recipes + vault collections) and memory store
     const collection = await getRecipesCollection();
+    const vaultCollection = await getVaultCollection();
     if (collection) {
-      const insertResult = await collection.insertOne(synthesizedRecipe as any);
+      const { _id, ...recipeDoc } = synthesizedRecipe;
+      const insertResult = await collection.insertOne(recipeDoc as any);
       synthesizedRecipe._id = insertResult.insertedId.toString();
-    } else {
-      memoryDb.saveRecipe(synthesizedRecipe);
+
+      if (vaultCollection) {
+        await vaultCollection.insertOne({
+          recipeId: synthesizedRecipe._id,
+          savedAt: new Date().toISOString(),
+        });
+      }
     }
+    memoryDb.saveRecipe(synthesizedRecipe);
 
     return NextResponse.json({
       success: true,
       data: synthesizedRecipe,
+      savedToAtlas: Boolean(collection),
       message: "Recipe synthesized and preserved in Vault!",
     });
   } catch (error: any) {

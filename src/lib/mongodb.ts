@@ -24,6 +24,8 @@ export function isMongoConfigured(): boolean {
   return Boolean(uri && uri.startsWith("mongodb"));
 }
 
+let hasSyncedSeedCatalog = false;
+
 export async function getMongoClient(): Promise<MongoClient | null> {
   if (!isMongoConfigured()) {
     return null;
@@ -44,6 +46,11 @@ export async function getMongoClient(): Promise<MongoClient | null> {
     }
     return await clientPromise;
   } catch (error) {
+    // Reset cached promise so subsequent requests automatically retry once Atlas Network Access is updated
+    clientPromise = null;
+    if (process.env.NODE_ENV === "development") {
+      global._mongoClientPromise = undefined;
+    }
     console.warn("MongoDB connection warning (falling back to memory mode):", error);
     return null;
   }
@@ -59,7 +66,31 @@ export async function getDatabase(): Promise<Db | null> {
 export async function getRecipesCollection(): Promise<Collection<Recipe> | null> {
   const db = await getDatabase();
   if (!db) return null;
-  return db.collection<Recipe>("recipes");
+  const col = db.collection<Recipe>("recipes");
+
+  // Automatically sync any newly added curated INITIAL_RECIPES into Atlas once per instance
+  if (!hasSyncedSeedCatalog) {
+    hasSyncedSeedCatalog = true;
+    (async () => {
+      try {
+        for (const seedRecipe of INITIAL_RECIPES) {
+          const exists = await col.findOne({ title: seedRecipe.title });
+          if (!exists) {
+            const { _id, ...docWithoutStringId } = seedRecipe;
+            await col.insertOne({
+              ...docWithoutStringId,
+              createdAt: new Date().toISOString(),
+            } as any);
+          }
+        }
+      } catch (syncErr) {
+        hasSyncedSeedCatalog = false;
+        console.warn("Background catalog sync warning:", syncErr);
+      }
+    })();
+  }
+
+  return col;
 }
 
 export async function getVaultCollection(): Promise<Collection<{ recipeId: string; savedAt: string }> | null> {
