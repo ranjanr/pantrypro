@@ -624,6 +624,377 @@ export const INITIAL_RECIPES: Recipe[] = [
       fatGrams: 12
     },
     image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=480&q=60"
+  },
+  {
+    _id: "rec_111",
+    title: "15-Minute Thai Green Coconut Curry with Zucchini & Eggplant",
+    tagline: "Velvety coconut milk simmered with blistered eggplant, tender zucchini, and fragrant lime-basil aromatics.",
+    description: "Caramelized cubes of eggplant and crisp-tender zucchini bathed in an aromatic coconut milk emulsion with garlic, ginger, green chili, and fresh lime.",
+    prepTimeMinutes: 5,
+    cookTimeMinutes: 10,
+    totalTimeMinutes: 15,
+    difficulty: "Quick (20m)",
+    servings: 2,
+    cuisine: "Thai Street Kitchen",
+    flavorProfiles: ["Creamy", "Fresh & Herbaceous", "Spicy", "Umami-rich"],
+    dietaryFlags: ["Vegan", "Vegetarian", "Gluten-Free", "Dairy-Free", "Eggless"],
+    ingredients: [
+      { item: "Coconut Milk (full-fat canned)", amount: "1 cup", notes: "Use thick cream from top of can first" },
+      { item: "Zucchini (cut into half-moons)", amount: "1 medium" },
+      { item: "Eggplant / Aubergine (cubed)", amount: "1 medium", notes: "Scored and seared first" },
+      { item: "Thai Green Curry Paste or Garlic-Ginger-Chili Paste", amount: "2 tbsp" },
+      { item: "Soy Sauce or Tamari", amount: "1 tbsp" },
+      { item: "Fresh Lime Juice & Basil / Cilantro", amount: "1 lime + handful herbs" },
+      { item: "Leftover Jasmine or Steamed Rice", amount: "1.5 cups", notes: "For serving" }
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        instruction: "Sear cubed eggplant and zucchini in a hot skillet with 1 tbsp oil for 4 minutes until golden-brown and blistered on the edges; remove to a plate.",
+        chefTip: "High-heat dry searing collapses eggplant air pockets so it absorbs silky coconut sauce instead of turning spongy.",
+        durationMinutes: 4
+      },
+      {
+        stepNumber: 2,
+        instruction: "Spoon the thick cream from the top of the coconut milk can into the hot pan. Fry curry paste, garlic, and ginger for 90 seconds until aromatic oil separates.",
+        chefTip: "Cracking coconut cream in high heat blooms fat-soluble aromatics far better than boiling.",
+        durationMinutes: 2
+      },
+      {
+        stepNumber: 3,
+        instruction: "Pour in the remaining coconut milk and soy sauce. Return the blistered eggplant and zucchini to the pan and simmer briskly for 4 minutes until glossy.",
+        chefTip: "Add zucchini slightly after eggplant if you prefer extra snap in your squash.",
+        durationMinutes: 4
+      },
+      {
+        stepNumber: 4,
+        instruction: "Kill the heat. Stir in fresh lime juice and torn basil or cilantro leaves. Spoon generously over warm rice.",
+        chefTip: "Never boil lime juice—adding it off-heat keeps the citrus top-notes vibrant.",
+        durationMinutes: 1
+      }
+    ],
+    proChefTips: {
+      heatControl: "High heat for blistering the eggplant and zucchini; medium simmer once coconut milk is added.",
+      acidityBalance: "Fresh lime juice at the very end slices through the rich coconut fat.",
+      restingTime: "Let curry sit 60 seconds off-heat so eggplant sponges up the spiced broth.",
+      flavorBooster: "A teaspoon of brown sugar or maple syrup rounds out the salty-spicy-sour Thai flavor triangle."
+    },
+    macros: {
+      calories: 380,
+      proteinGrams: 9,
+      carbsGrams: 36,
+      fatGrams: 22
+    },
+    image: "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=480&q=60"
+  },
+  {
+    _id: "rec_112",
+    title: "Mediterranean Charred Zucchini, Eggplant & Chickpea Skillet",
+    tagline: "Sun-drenched one-pan ratatouille skillet with crispy chickpeas, garlic, and cherry tomatoes.",
+    description: "Golden seared zucchini and eggplant tossed with spiced crispy chickpeas, burst cherry tomatoes, garlic, olive oil, and a lemon-herb yogurt or tahini drizzle.",
+    prepTimeMinutes: 5,
+    cookTimeMinutes: 12,
+    totalTimeMinutes: 17,
+    difficulty: "Quick (20m)",
+    servings: 2,
+    cuisine: "Mediterranean Bistro",
+    flavorProfiles: ["Smoky", "Zesty & Tangy", "Fresh & Herbaceous"],
+    dietaryFlags: ["Vegetarian", "Vegan", "Gluten-Free", "Eggless", "High-Protein"],
+    ingredients: [
+      { item: "Zucchini (diced)", amount: "1 medium" },
+      { item: "Eggplant (diced)", amount: "1 medium" },
+      { item: "Canned Chickpeas (drained & rinsed)", amount: "1 cup" },
+      { item: "Cherry Tomatoes or Diced Tomato", amount: "1 cup" },
+      { item: "Garlic (smashed & sliced)", amount: "4 cloves" },
+      { item: "Extra-Virgin Olive Oil & Smoked Paprika", amount: "2 tbsp oil + 1 tsp paprika" },
+      { item: "Lemon Juice & Greek Yogurt or Tahini", amount: "1 lemon + 2 tbsp drizzle" }
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        instruction: "Heat olive oil in a wide skillet over medium-high. Add cubed eggplant and zucchini in a single layer; sear undisturbed for 3 minutes until deeply golden.",
+        chefTip: "Salt the vegetables only after they brown so they sear instead of steaming in their own juices.",
+        durationMinutes: 4
+      },
+      {
+        stepNumber: 2,
+        instruction: "Push vegetables to the side; add drained chickpeas, sliced garlic, cumin, and smoked paprika to the center hotspot for 3 minutes until chickpeas pop and crisp.",
+        chefTip: "Toasting spices directly on the chickpeas creates a savory crust.",
+        durationMinutes: 3
+      },
+      {
+        stepNumber: 3,
+        instruction: "Toss in cherry tomatoes and cook for 3 minutes, pressing lightly with a spoon until they burst into a jammy pan sauce.",
+        chefTip: "Burst tomato juices deglaze the golden fond stuck to the skillet.",
+        durationMinutes: 3
+      },
+      {
+        stepNumber: 4,
+        instruction: "Finish off-heat with fresh lemon zest, lemon juice, parsley/cilantro, and a swirl of Greek yogurt, coconut milk crema, or tahini.",
+        chefTip: "Cold yogurt or creamy coconut swirl against hot charred vegetables creates restaurant-level contrast.",
+        durationMinutes: 2
+      }
+    ],
+    proChefTips: {
+      heatControl: "Use your widest pan so zucchini and eggplant have direct metal contact.",
+      acidityBalance: "Burst tomatoes + fresh lemon juice brighten the earthy eggplant.",
+      restingTime: "Serve warm straight from the skillet.",
+      flavorBooster: "Finish with a pinch of oregano or za'atar and flaky sea salt."
+    },
+    macros: {
+      calories: 390,
+      proteinGrams: 14,
+      carbsGrams: 42,
+      fatGrams: 18
+    },
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=480&q=60"
+  },
+  {
+    _id: "rec_113",
+    title: "10-Minute Golden Egg & Scallion Soy-Butter Fried Rice",
+    tagline: "Wok-seared leftover rice ribbons with soft-scrambled eggs,焦香 soy caramel, and toasted garlic.",
+    description: "The ultimate 10-minute fridge rescue: cold leftover rice flash-seared with golden eggs, garlic, soy sauce, butter, and crisp green onions or baby spinach.",
+    prepTimeMinutes: 3,
+    cookTimeMinutes: 7,
+    totalTimeMinutes: 10,
+    difficulty: "Ultra-Fast (10m)",
+    servings: 2,
+    cuisine: "East Asian Diner",
+    flavorProfiles: ["Umami-rich", "Smoky", "Comforting"],
+    dietaryFlags: ["Vegetarian", "High-Protein"],
+    ingredients: [
+      { item: "Leftover Cooked Rice (chilled)", amount: "2 cups" },
+      { item: "Eggs", amount: "3 large", notes: "Whisked with a pinch of salt" },
+      { item: "Garlic (finely minced)", amount: "3 cloves" },
+      { item: "Soy Sauce", amount: "1.5 tbsp" },
+      { item: "Butter or Sesame Oil", amount: "1.5 tbsp" },
+      { item: "Scallions / Green Onions or Baby Spinach", amount: "1 cup chopped" }
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        instruction: "Heat half the butter or oil in a hot skillet. Pour in whisked eggs and stir into soft, pillowy curds in 45 seconds; transfer out immediately.",
+        chefTip: "Pulling eggs while still slightly glossy prevents rubbery overcooking later.",
+        durationMinutes: 1
+      },
+      {
+        stepNumber: 2,
+        instruction: "Add remaining butter and minced garlic; sizzle 20 seconds, then dump in cold rice. Press flat against the hot pan so grains toast and pop.",
+        chefTip: "Letting rice sit undisturbed for 60 seconds creates crispy golden grains.",
+        durationMinutes: 3
+      },
+      {
+        stepNumber: 3,
+        instruction: "Drizzle soy sauce around the screaming-hot perimeter of the skillet so it caramelizes on contact before tossing through the rice.",
+        chefTip: "Sizzling soy sauce on bare hot metal unlocks smoky 'wok hei' aroma.",
+        durationMinutes: 2
+      },
+      {
+        stepNumber: 4,
+        instruction: "Fold the soft eggs and scallions/spinach back in. Toss for 30 seconds off-heat and serve piping hot.",
+        chefTip: "Finish with cracked black pepper or chili crisp.",
+        durationMinutes: 1
+      }
+    ],
+    proChefTips: {
+      heatControl: "Maximum heat when searing rice and soy sauce; medium heat for soft egg curds.",
+      acidityBalance: "A tiny splash of rice vinegar or lime juice cuts through the butter richness.",
+      restingTime: "Serve immediately while rice grains are crisp.",
+      flavorBooster: "A pinch of white pepper and toasted sesame oil."
+    },
+    macros: {
+      calories: 440,
+      proteinGrams: 19,
+      carbsGrams: 50,
+      fatGrams: 17
+    },
+    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=480&q=60"
+  },
+  {
+    _id: "rec_114",
+    title: "14-Minute Garlic-Soy Glazed Eggplant & Crispy Tofu Bowl",
+    tagline: "Caramelized eggplant and golden tofu cubes in a sticky sweet-savory garlic-ginger glaze.",
+    description: "Velvety seared eggplant and crispy tofu tossed in a 60-second glossy sauce of soy sauce, garlic, ginger, and chili, served over steamed rice or noodles.",
+    prepTimeMinutes: 4,
+    cookTimeMinutes: 10,
+    totalTimeMinutes: 14,
+    difficulty: "Ultra-Fast (10m)",
+    servings: 2,
+    cuisine: "Modern Asian Bistro",
+    flavorProfiles: ["Umami-rich", "Sweet & Savory", "Spicy"],
+    dietaryFlags: ["Vegan", "Vegetarian", "Dairy-Free", "Eggless", "High-Protein"],
+    ingredients: [
+      { item: "Eggplant (cut into bite-size wedges)", amount: "1 medium" },
+      { item: "Extra-Firm Tofu or Paneer (cubed)", amount: "200g" },
+      { item: "Soy Sauce", amount: "2 tbsp" },
+      { item: "Garlic (minced)", amount: "4 cloves" },
+      { item: "Maple Syrup, Honey, or Sugar", amount: "1 tbsp" },
+      { item: "Rice Vinegar or Lime Juice", amount: "1 tbsp" },
+      { item: "Leftover Rice or Ramen Noodles", amount: "1.5 cups" }
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        instruction: "Crisp cubed tofu and eggplant wedges together in a hot non-stick or cast-iron skillet with 1.5 tbsp oil for 5-6 minutes until golden on all sides.",
+        chefTip: "Covering the pan for the last 2 minutes steams the eggplant interior until custard-soft while keeping the bottom crusted.",
+        durationMinutes: 6
+      },
+      {
+        stepNumber: 2,
+        instruction: "Whisk soy sauce, vinegar/lime, sweetener, minced garlic, and 2 tbsp water in a small cup.",
+        chefTip: "Pre-mixing the glaze prevents garlic from burning in the dry pan.",
+        durationMinutes: 1
+      },
+      {
+        stepNumber: 3,
+        instruction: "Pour the garlic-soy glaze into the sizzling skillet. Toss vigorously for 90 seconds as it bubbles into a thick, mirror-like coating around the eggplant and tofu.",
+        chefTip: "Reduce until virtually no loose liquid pools at the bottom of the pan.",
+        durationMinutes: 2
+      },
+      {
+        stepNumber: 4,
+        instruction: "Spoon over warm rice or noodles and top with sesame seeds or scallions.",
+        chefTip: "A drizzle of sesame oil right before serving amplifies the roasted aroma.",
+        durationMinutes: 1
+      }
+    ],
+    proChefTips: {
+      heatControl: "Medium-high heat for searing; keep bubbling briskly during the 90-second glaze reduction.",
+      acidityBalance: "Rice vinegar or lime juice keeps the sticky soy glaze bright and tangy.",
+      restingTime: "Let rest 1 minute so glaze clings tightly to tofu and eggplant.",
+      flavorBooster: "Add 1 tsp gochujang or chili flakes to the glaze for heat."
+    },
+    macros: {
+      calories: 410,
+      proteinGrams: 22,
+      carbsGrams: 46,
+      fatGrams: 15
+    },
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=480&q=60"
+  },
+  {
+    _id: "rec_115",
+    title: "15-Minute Creamy Coconut Chickpea & Spinach Korma",
+    tagline: "Silky spiced coconut milk curry loaded with chickpeas, baby spinach, and blistered tomatoes.",
+    description: "A 15-minute weeknight powerhouse: canned chickpeas and fresh spinach simmered in rich coconut milk, garlic, garam masala, and burst cherry tomatoes.",
+    prepTimeMinutes: 4,
+    cookTimeMinutes: 11,
+    totalTimeMinutes: 15,
+    difficulty: "Quick (20m)",
+    servings: 2,
+    cuisine: "Modern Indian Kitchen",
+    flavorProfiles: ["Creamy", "Comforting", "Spicy"],
+    dietaryFlags: ["Vegan", "Vegetarian", "Gluten-Free", "Dairy-Free", "Eggless", "High-Protein"],
+    ingredients: [
+      { item: "Coconut Milk", amount: "1 cup" },
+      { item: "Canned Chickpeas or Paneer", amount: "1.5 cups" },
+      { item: "Baby Spinach", amount: "2 cups" },
+      { item: "Cherry Tomatoes or Roma Tomato", amount: "1 cup" },
+      { item: "Garlic & Ginger (minced)", amount: "1 tbsp" },
+      { item: "Garam Masala, Cumin & Turmeric", amount: "1 tsp each" },
+      { item: "Fresh Lime Juice", amount: "1 tbsp" }
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        instruction: "Sauté garlic, ginger, cumin, and turmeric in 1 tbsp oil over medium heat for 45 seconds until fragrant. Add tomatoes and mash until jammy.",
+        chefTip: "Mashing tomatoes creates a natural pectin thickener for the coconut gravy.",
+        durationMinutes: 3
+      },
+      {
+        stepNumber: 2,
+        instruction: "Pour in coconut milk and drained chickpeas. Simmer rapidly for 5 minutes, lightly crushing a few chickpeas against the pan side to thicken the sauce.",
+        chefTip: "Crushing 10% of the chickpeas releases starch for an instant velvety restaurant texture.",
+        durationMinutes: 5
+      },
+      {
+        stepNumber: 3,
+        instruction: "Fold in baby spinach and garam masala. Cook 90 seconds just until the greens wilt into emerald ribbons.",
+        chefTip: "Adding garam masala at the end preserves its floral cardamom and clove notes.",
+        durationMinutes: 2
+      },
+      {
+        stepNumber: 4,
+        instruction: "Finish off-heat with fresh lime juice and serve with warm rice or charred tortillas/rotis.",
+        chefTip: "Lime juice brightens the creamy coconut and earthy chickpeas.",
+        durationMinutes: 1
+      }
+    ],
+    proChefTips: {
+      heatControl: "Medium heat for spice bloom; gentle boil for coconut reduction.",
+      acidityBalance: "Tomatoes + finishing lime juice prevent coconut milk from feeling heavy.",
+      restingTime: "Rest 2 minutes off-heat for flavors to meld.",
+      flavorBooster: "Top with toasted cashews or pumpkin seeds."
+    },
+    macros: {
+      calories: 430,
+      proteinGrams: 16,
+      carbsGrams: 44,
+      fatGrams: 21
+    },
+    image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=480&q=60"
+  },
+  {
+    _id: "rec_116",
+    title: "12-Minute Garlic-Butter Zucchini, Mushroom & Bell Pepper Stir-Fry",
+    tagline: "Crisp-tender garden vegetables seared in browned garlic butter and umami soy glaze.",
+    description: "High-heat skillet stir-fry transforming zucchini, mushrooms, and bell peppers or broccoli into a glossy, savory dish in 12 minutes flat.",
+    prepTimeMinutes: 4,
+    cookTimeMinutes: 8,
+    totalTimeMinutes: 12,
+    difficulty: "Ultra-Fast (10m)",
+    servings: 2,
+    cuisine: "Pan-Asian Fusion",
+    flavorProfiles: ["Umami-rich", "Smoky", "Fresh & Herbaceous"],
+    dietaryFlags: ["Vegetarian", "Eggless", "Gluten-Free"],
+    ingredients: [
+      { item: "Zucchini (sliced into thick batons)", amount: "1 medium" },
+      { item: "Mushrooms or Eggplant (sliced)", amount: "1.5 cups" },
+      { item: "Bell Pepper or Broccoli Florets", amount: "1 cup" },
+      { item: "Garlic (finely sliced)", amount: "4 cloves" },
+      { item: "Butter or Olive Oil", amount: "1.5 tbsp" },
+      { item: "Soy Sauce or Tamari", amount: "1.5 tbsp" },
+      { item: "Lemon or Lime Juice", amount: "1 tsp" }
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        instruction: "Heat skillet until smoking hot. Sear mushrooms and bell peppers/broccoli dry or with 1 tsp oil for 3 minutes until charred edges appear.",
+        chefTip: "Dry-searing mushrooms first drives off water and concentrates meaty glutamates.",
+        durationMinutes: 3
+      },
+      {
+        stepNumber: 2,
+        instruction: "Add zucchini batons, butter, and sliced garlic. Toss over high heat for 3 minutes until garlic turns golden and zucchini is crisp-tender.",
+        chefTip: "Cut zucchini into thick batons so the outside caramelizes while the center stays crisp.",
+        durationMinutes: 3
+      },
+      {
+        stepNumber: 3,
+        instruction: "Splash soy sauce around the pan edges and toss for 60 seconds until every piece is coated in browned garlic-butter glaze.",
+        chefTip: "Soy sauce + browned butter creates a natural glutamic-lactone umami bomb.",
+        durationMinutes: 1
+      },
+      {
+        stepNumber: 4,
+        instruction: "Finish off-heat with a squeeze of lemon or lime and cracked black pepper.",
+        chefTip: "Serve standalone as a low-carb bowl or over warm rice/noodles.",
+        durationMinutes: 1
+      }
+    ],
+    proChefTips: {
+      heatControl: "Keep heat high throughout so zucchini never turns mushy.",
+      acidityBalance: "A bright hit of citrus lifts the rich garlic butter.",
+      restingTime: "Serve immediately to preserve vegetable snap.",
+      flavorBooster: "Sprinkle toasted sesame seeds or chili flakes."
+    },
+    macros: {
+      calories: 260,
+      proteinGrams: 8,
+      carbsGrams: 18,
+      fatGrams: 18
+    },
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=480&q=60"
   }
 ];
 
@@ -671,8 +1042,8 @@ export const CHEF_PERSONAS = [
 ];
 
 export const POPULAR_FRIDGE_ITEMS = [
-  "Shrimp / Prawns", "Leftover Rice", "Paneer", "Baby Spinach", "Garlic",
-  "Sweet Corn", "Black Beans", "Soy Sauce", "Gochujang", "Butter",
-  "Coconut Milk", "Red Lentils", "Tahini", "Miso Paste", "Eggs",
-  "Tofu", "Cherry Tomatoes", "Tortillas", "Greek Yogurt", "Lime"
+  "Shrimp / Prawns", "Leftover Rice", "Paneer", "Baby Spinach", "Zucchini",
+  "Eggplant", "Coconut Milk", "Chickpeas", "Eggs", "Tofu",
+  "Garlic", "Sweet Corn", "Black Beans", "Soy Sauce", "Gochujang",
+  "Mushrooms", "Bell Pepper", "Cherry Tomatoes", "Tortillas", "Greek Yogurt"
 ];
