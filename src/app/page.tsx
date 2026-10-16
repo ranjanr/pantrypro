@@ -10,13 +10,16 @@ import { CookingFocusMode } from "@/components/CookingFocusMode";
 import { SynthesizeModal } from "@/components/SynthesizeModal";
 import { Footer } from "@/components/Footer";
 import { Recipe } from "@/lib/types";
+import { INITIAL_RECIPES } from "@/lib/seed-data";
 import { Sparkles, Flame, ArrowUpRight, ChefHat } from "lucide-react";
 
+const INITIAL_SIX_DISHES = INITIAL_RECIPES.slice(0, 6);
+
 export default function HomePage() {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [recipes, setRecipes] = useState<Recipe[]>(INITIAL_SIX_DISHES);
+  const [loading, setLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [vaultCount, setVaultCount] = useState(0);
+  const [vaultCount, setVaultCount] = useState(2);
   const [currentQuery, setCurrentQuery] = useState("");
 
   // Modals
@@ -24,13 +27,19 @@ export default function HomePage() {
   const [focusRecipe, setFocusRecipe] = useState<Recipe | null>(null);
   const [synthesizerOpen, setSynthesizerOpen] = useState(false);
 
-  // Fetch initial recipes
+  // Fetch recipes
   const loadRecipes = useCallback(
     async (params?: { query?: string; maxTime?: number; dietary?: string[] }) => {
-      setIsSearching(true);
+      const hasFilters = Boolean(
+        params?.query || params?.maxTime || (params?.dietary && params.dietary.length > 0)
+      );
+      if (hasFilters) {
+        setIsSearching(true);
+      }
       setCurrentQuery(params?.query || "");
       try {
         const queryParams = new URLSearchParams();
+        queryParams.set("limit", "6");
         if (params?.query) queryParams.set("q", params.query);
         if (params?.maxTime) queryParams.set("maxTime", params.maxTime.toString());
         if (params?.dietary && params.dietary.length > 0)
@@ -38,8 +47,8 @@ export default function HomePage() {
 
         const res = await fetch(`/api/recipes?${queryParams.toString()}`);
         const data = await res.json();
-        if (data.success) {
-          setRecipes(data.data || []);
+        if (data.success && Array.isArray(data.data)) {
+          setRecipes(data.data.slice(0, 6));
         }
       } catch (err) {
         console.error("Failed to load recipes:", err);
@@ -153,7 +162,7 @@ export default function HomePage() {
         {/* Recipe Grid */}
         <section>
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div
                   key={i}
@@ -180,11 +189,12 @@ export default function HomePage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {recipes.map((recipe) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recipes.map((recipe, idx) => (
                 <RecipeCard
                   key={recipe._id || recipe.title}
                   recipe={recipe}
+                  priority={idx < 3}
                   onSelect={(r) => setSelectedRecipe(r)}
                   onCookNow={(r) => setFocusRecipe(r)}
                   onToggleVault={handleToggleVault}

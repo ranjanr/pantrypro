@@ -312,7 +312,7 @@ Requirements:
     "carbsGrams": 40,
     "fatGrams": 18
   },
-  "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
+  "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=480&q=60"
 }`;
 
     const result = await model.generateContent(prompt);
@@ -394,7 +394,7 @@ function generateFallbackSynthesizedRecipe(params: {
       carbsGrams: 36,
       fatGrams: 16
     },
-    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=480&q=60",
     isCustom: true,
     createdAt: new Date().toISOString(),
     savedInVault: true,

@@ -10,12 +10,16 @@ interface RecipeCardProps {
   onSelect: (recipe: Recipe) => void;
   onCookNow: (recipe: Recipe) => void;
   onToggleVault?: (recipeId: string) => Promise<boolean>;
+  priority?: boolean;
 }
 
-export function RecipeCard({ recipe, onSelect, onCookNow, onToggleVault }: RecipeCardProps) {
+export function RecipeCard({ recipe, onSelect, onCookNow, onToggleVault, priority = false }: RecipeCardProps) {
   const [isSaved, setIsSaved] = useState(Boolean(recipe.savedInVault));
   const [isSaving, setIsSaving] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const optimizedSrc = recipe.image?.includes("images.unsplash.com")
+    ? recipe.image.replace(/w=\d+/g, "w=480").replace(/q=\d+/g, "q=60")
+    : recipe.image;
 
   const handleVaultClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -73,15 +77,14 @@ export function RecipeCard({ recipe, onSelect, onCookNow, onToggleVault }: Recip
       {/* Recipe Image Banner with Tags */}
       <div className="relative w-full h-48 sm:h-52 bg-stone-200 dark:bg-stone-800 overflow-hidden">
         <Image
-          src={recipe.image}
+          src={optimizedSrc}
           alt={recipe.title}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className={`object-cover group-hover:scale-105 transition-transform duration-500 ${
-            imageLoaded ? "opacity-100" : "opacity-0"
-          }`}
-          onLoad={() => setImageLoaded(true)}
-          priority={false}
+          unoptimized
+          quality={60}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          priority={priority}
         />
         
         {/* Gradient scrim */}

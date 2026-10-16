@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const query = searchParams.get("q") || "";
     const maxTime = searchParams.get("maxTime") ? parseInt(searchParams.get("maxTime")!) : undefined;
     const dietary = searchParams.get("dietary") ? searchParams.get("dietary")!.split(",") : undefined;
-    const limit = searchParams.get("limit") ? parseInt(searchParams.get("limit")!) : 20;
+    const limit = searchParams.get("limit") ? parseInt(searchParams.get("limit")!) : 6;
 
     const result = await searchRecipesWithVector({
       query,

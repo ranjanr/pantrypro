@@ -16,11 +16,16 @@ export function cosineSimilarity(vecA: number[], vecB: number[]): number {
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
-// Clean document for frontend transmission (strip heavy 768-dim float array)
+// Clean document for frontend transmission (strip heavy 768-dim float array & optimize image URL)
 function sanitizeRecipe(r: any): Recipe {
   const { embedding, ...rest } = r;
+  const rawImage: string = rest.image || "";
+  const optimizedImage = rawImage.includes("images.unsplash.com")
+    ? rawImage.replace(/w=\d+/g, "w=480").replace(/q=\d+/g, "q=60")
+    : rawImage;
   return {
     ...rest,
+    image: optimizedImage,
     _id: rest._id ? rest._id.toString() : rest._id,
   };
 }
@@ -38,7 +43,7 @@ export async function searchRecipesWithVector({
   query,
   maxPrepTime,
   dietaryFlags,
-  limit = 12,
+  limit = 6,
 }: {
   query?: string;
   maxPrepTime?: number;
@@ -242,7 +247,7 @@ export async function searchRecipesWithVector({
   } catch (err) {
     console.error("MongoDB query error:", err);
     return {
-      recipes: memoryDb.getRecipes({ maxTime: maxPrepTime, dietary: dietaryFlags, query }).map(sanitizeRecipe),
+      recipes: memoryDb.getRecipes({ maxTime: maxPrepTime, dietary: dietaryFlags, query }).slice(0, limit).map(sanitizeRecipe),
       isVectorSearch: false,
       fallbackMode: true,
     };

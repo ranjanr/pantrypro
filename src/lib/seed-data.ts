@@ -62,7 +62,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 34,
       fatGrams: 22
     },
-    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=480&q=60"
   },
   {
     _id: "rec_102",
@@ -124,7 +124,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 68,
       fatGrams: 14
     },
-    image: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=480&q=60"
   },
   {
     _id: "rec_103",
@@ -186,7 +186,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 48,
       fatGrams: 14
     },
-    image: "https://images.unsplash.com/photo-1559742811-822873691df8?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1559742811-822873691df8?auto=format&fit=crop&w=480&q=60"
   },
   {
     _id: "rec_104",
@@ -248,7 +248,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 62,
       fatGrams: 10
     },
-    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=480&q=60"
   },
   {
     _id: "rec_105",
@@ -310,7 +310,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 52,
       fatGrams: 16
     },
-    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=480&q=60"
   },
   {
     _id: "rec_106",
@@ -373,7 +373,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 42,
       fatGrams: 18
     },
-    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=480&q=60"
   },
   {
     _id: "rec_107",
@@ -436,7 +436,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 38,
       fatGrams: 14
     },
-    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=480&q=60"
   },
   {
     _id: "rec_108",
@@ -499,7 +499,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 64,
       fatGrams: 16
     },
-    image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=480&q=60"
   },
   {
     _id: "rec_109",
@@ -562,7 +562,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 46,
       fatGrams: 10
     },
-    image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=480&q=60"
   },
   {
     _id: "rec_110",
@@ -623,7 +623,7 @@ export const INITIAL_RECIPES: Recipe[] = [
       carbsGrams: 16,
       fatGrams: 12
     },
-    image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=480&q=60"
   }
 ];
 
