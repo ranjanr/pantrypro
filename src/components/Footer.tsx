@@ -7,7 +7,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500 dark:text-stone-400">
         
         {/* Brand info */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
           <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-brand-500 to-amber-500 flex items-center justify-center text-white shadow-sm">
             <Flame className="w-3.5 h-3.5 fill-white/20" />
           </div>
@@ -15,7 +15,7 @@ export function Footer() {
             Pantry<span className="text-brand-500">Pro</span>
           </span>
           <span className="text-stone-400 dark:text-stone-600">•</span>
-          <span>The Intent-Driven Culinary Curation Engine</span>
+          <span>Powered by <strong className="font-semibold text-stone-700 dark:text-stone-300">Mongo Atlas</strong> and <strong className="font-semibold text-stone-700 dark:text-stone-300">Gemini</strong></span>
         </div>
 
         {/* Creator attribution */}
